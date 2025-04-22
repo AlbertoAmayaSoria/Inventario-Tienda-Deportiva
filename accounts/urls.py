@@ -1,7 +1,9 @@
 # accounts/urls.py
 from django.urls import path
-from . import views  # Importa las vistas de la misma app
+from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),  # Redirige a la vista 'home' en la aplicación accounts
+    path('login/', views.login_view, name='login'),
+    path('dashboard/', views.dashboard, name='dashboard'),  # Página a la que se redirige si el login es exitoso
 ]
+

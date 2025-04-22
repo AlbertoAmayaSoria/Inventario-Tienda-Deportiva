@@ -9,7 +9,8 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form>
+        <form method="post">
+            {% csrf_token %}
             <label for="username">Usuario:</label>
             <input type="text" id="username" name="username" required>
 
@@ -18,6 +19,12 @@
 
             <button type="submit">Ingresar</button>
         </form>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color:red">{{ message }}</p>
+            {% endfor %}
+        {% endif %} 
     </div>
 </body>
 </html>
