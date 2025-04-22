@@ -1,0 +1,14 @@
+##[pylyzer] failed /home/tito/ProyectoIS/accounts/views.py 1745281479 389
+.admin = pyimport "__init__"
+.__init__ = pyimport "__init__"
+
+.___v_desugar_1 = pyimport "__init__"
+
+.path: Never
+.include: Never
+.___v_desugar_2: Never
+.views: Never
+.urlpatterns: Never
+.___v_desugar_3 = pyimport "shortcuts"
+.shortcuts = pyimport "shortcuts"
+.home: (request: Obj) -> Never
