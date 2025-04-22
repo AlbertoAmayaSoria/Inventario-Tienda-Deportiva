@@ -1,14 +1,21 @@
-##[pylyzer] failed /home/tito/ProyectoIS/accounts/views.py 1745281479 389
-.admin = pyimport "__init__"
-.__init__ = pyimport "__init__"
-
-.___v_desugar_1 = pyimport "__init__"
-
-.path: Never
-.include: Never
-.___v_desugar_2: Never
-.views: Never
-.urlpatterns: Never
-.___v_desugar_3 = pyimport "shortcuts"
+##[pylyzer] failed /home/tito/ProyectoIS/accounts/views.py 1745295716 1128
+.___v_desugar_1 = pyimport "shortcuts"
 .shortcuts = pyimport "shortcuts"
+.render: (request: Obj, template_name: Obj, context: Obj := Obj, content_type: Obj := Obj, status: Obj := Obj, using: Obj := Obj) -> Never
+.redirect: Never
+.___v_desugar_2 = pyimport "auth"
+.auth = pyimport "auth"
+.authenticate: (request: Obj := Obj, **_ := Obj) -> Never
+.login: Never
+.messages = pyimport "messages"
+
+.___v_desugar_3 = pyimport "decorators"
+.decorators = pyimport "decorators"
+.login_required: (function: Never := Never, redirect_field_name: Never := Never, login_url: Never := Never) -> Never
+.___v_desugar_4 = pyimport "auth"
+
+.logout: Never
+.login_view: |E: Type, Type_4769 <: Structural({.POST = ?Self; .method = ?E}), K: Type, Self <: global::Indexable(?K, ?V), V: Type|(request: Type_4769) -> Never
+.dashboard: (request: Obj) -> Never
 .home: (request: Obj) -> Never
+.logout_view: (request: Obj) -> Never

@@ -22,9 +22,7 @@ from accounts import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),  # Redirige a las URLs de la app 'accounts'
-    path('login/', views.login_view, name='login'),  # Ruta para la vista de inicio de sesión
-    path('', views.home, name='home'),  # Ruta raíz para la vista 'home'
-    path('dashboard/', views.dashboard, name='dashboard'),  # Ruta para el dashboard
+    path('accounts/', include('accounts.urls')),  # Accede a las URLs de la app 'accounts'
+    path('', views.home, name='home'),  # Ruta raíz para la vista de inicio (home)
 ]
 

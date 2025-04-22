@@ -1,9 +1,10 @@
 # accounts/urls.py
 from django.urls import path
-from . import views
+from . import views  # Importa las vistas de la app 'accounts'
 
 urlpatterns = [
-    path('login/', views.login_view, name='login'),
-    path('dashboard/', views.dashboard, name='dashboard'),  # Página a la que se redirige si el login es exitoso
+    path('login/', views.login_view, name='login'),  # Ruta para iniciar sesión
+    path('logout/', views.logout_view, name='logout'),  # Ruta para cerrar sesión
+    path('dashboard/', views.dashboard, name='dashboard'),  # Ruta para el dashboard
 ]
 
