@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
+from django.shortcuts import render
 
 def login_view(request):
     if request.method == 'POST':
@@ -48,3 +49,13 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+# Dejen esto al ladito por favor
+
+def home(request):
+    return render(request, 'dashboard.html', {})
+
+def products(request):
+    return render(request, 'products.html',{})
+
+def customer(request):
+    return render(request, 'customer.html',{})

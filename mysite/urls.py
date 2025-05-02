@@ -24,5 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),  # Accede a las URLs de la app 'accounts'
     path('', views.home, name='home'),  # Ruta raíz para la vista de inicio (home)
+    path('products/', views.products, name='products'),
+    path('customer/', views.customer, name='customer')
 ]
 
