@@ -51,8 +51,8 @@ def logout_view(request):
 
 # Dejen esto al ladito por favor
 
-def home(request):
-    return render(request, 'dashboard.html', {})
+# def home(request):
+#    return render(request, 'dashboard.html', {})
 
 def products(request):
     return render(request, 'products.html',{})
