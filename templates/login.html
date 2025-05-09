@@ -3,7 +3,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
@@ -21,7 +23,6 @@
         </form>
 
         <p>¿No tienes una cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
-
 
         {% if messages %}
             {% for message in messages %}

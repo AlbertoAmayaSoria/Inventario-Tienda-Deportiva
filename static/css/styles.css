@@ -1,48 +1,94 @@
 body {
-    background-color: #f2f2f2;
-    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top left, #0f0f2d, #050517);
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
 }
 
+/* Login Container */
 .login-container {
-    width: 300px;
-    margin: 100px auto;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
+    width: 350px;
+    background: #1c1f3b;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #00fff7;
+    border: 1px solid #00fff7;
+    position: relative;
     text-align: center;
-    margin-bottom: 20px;
 }
 
+/* Title */
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: #00fff7;
+    text-shadow: 0 0 5px #00fff7;
+}
+
+/* Labels */
 label {
     display: block;
-    margin-top: 10px;
+    text-align: left;
+    margin: 10px 0 5px;
+    color: #ccc;
 }
 
+/* Inputs */
 input[type="text"],
 input[type="password"] {
     width: 100%;
-    padding: 8px;
+    padding: 12px;
     margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: none;
+    border-radius: 8px;
+    background: #2b2f4a;
+    color: #fff;
+    font-size: 1rem;
+    box-shadow: inset 0 0 5px #00fff7;
+    outline: none;
+    transition: box-shadow 0.3s;
 }
 
+input[type="text"]:focus,
+input[type="password"]:focus {
+    box-shadow: 0 0 10px #00fff7;
+}
+
+/* Button */
 button {
     width: 100%;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: #007BFF;
-    color: white;
+    padding: 12px;
+    margin-top: 25px;
+    background: #00fff7;
+    color: #050517;
+    font-weight: bold;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
+    box-shadow: 0 0 10px #00fff7;
+    transition: background 0.3s, box-shadow 0.3s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background: #05d8c9;
+    box-shadow: 0 0 20px #05d8c9;
+}
+
+/* Optional link styling */
+a {
+    color: #00fff7;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #05d8c9;
 }
 
