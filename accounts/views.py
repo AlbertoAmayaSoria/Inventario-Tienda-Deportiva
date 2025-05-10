@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.shortcuts import render
+from accounts.models import *
 
 def login_view(request):
     if request.method == 'POST':
@@ -51,11 +52,23 @@ def logout_view(request):
 
 # Dejen esto al ladito por favor
 
-# def home(request):
-#    return render(request, 'dashboard.html', {})
+def panel(request):
+    orders = Order.objects.all()
+    customers = Customer.objects.all()
+
+    total_orders = orders.count()
+    delivered = orders.filter(status='Entregado').count()
+    pending = orders.filter(status='Pendiente').count()
+
+
+    context = {'orders':orders, 'customers': customers, 'total_orders': total_orders,
+    'delivered': delivered,'pending': pending}
+
+    return render(request, 'panel.html', context)
 
 def products(request):
-    return render(request, 'products.html',{})
+    products = Product.objects.all()
+    return render(request, 'products.html', {'products':products})
 
 def customer(request):
     return render(request, 'customer.html',{})

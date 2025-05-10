@@ -7,6 +7,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),  # Ruta para cerrar sesión
     path('dashboard/', views.dashboard, name='dashboard'),  # Ruta para el dashboard
     path('register/', views.register_view, name='register'),
+    path('panel/', views.panel, name='panel'),
     path('', views.home, name='home')
 ]
 
