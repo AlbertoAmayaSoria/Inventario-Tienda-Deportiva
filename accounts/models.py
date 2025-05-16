@@ -19,13 +19,12 @@ class Tag(models.Model):
 
 class Product(models.Model):
     CATEGORY = (
-        ('Camisetas', 'Camisetas'),
+        ('Ropa', 'Ropa'),
         ('Calzado', 'Calzado'),
-        ('Pelotas', 'Pelotas'),
-        ('Pulseras', 'Pulseras'),
-        ('Termos', 'Termos'),
-        ('Toallas','Toallas'),
-        ('Guantes','Guantes')
+        ('Accesorios', 'Accesorios'),
+        ('Equipamiento', 'Equipamiento'),
+        ('Tecnología', 'Tecnología'),
+        ('Nutrición','Nutrición')
     )
 
     name = models.CharField(max_length=200, null=True)

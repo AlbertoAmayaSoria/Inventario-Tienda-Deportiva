@@ -42,9 +42,39 @@ def register_view(request):
 def dashboard(request):
     return render(request, 'dashboard.html')
 
+#@login_required
+#def home(request):
+#    return render(request, 'home.html')  # Asegúrate de que esta plantilla esté en 'templates/'
+
 @login_required
 def home(request):
-    return render(request, 'home.html')  # Asegúrate de que esta plantilla esté en 'templates/'
+    category = request.GET.get('category')
+    tag = request.GET.get('tag')
+    price_min = request.GET.get('price_min')
+    price_max = request.GET.get('price_max')
+
+    products = Product.objects.all()
+
+    if category and category != 'All':
+        products = products.filter(category=category)
+    
+    if tag and tag != 'All':
+        products = products.filter(tags__name=tag)
+    
+    if price_min:
+        products = products.filter(price__gte=price_min)
+    if price_max:
+        products = products.filter(price__lte=price_max)
+
+    categories = [c[0] for c in Product.CATEGORY]
+    tags = Tag.objects.all()
+
+    context = {
+        'products': products,
+        'categories': categories,
+        'tags': tags,
+    }
+    return render(request, 'home.html', context)
 
 def logout_view(request):
     logout(request)

@@ -10,6 +10,59 @@
     <div class="home-container">
         <h2>Bienvenido a la aplicación</h2>
         <p>¡Has iniciado sesión correctamente!</p>
+
+<!-- AQUI EMPIEZA EL FILTRO -->
+<h3>Filtrar Productos</h3>
+<form method="get">
+    <label for="category">Categoría:</label>
+    <select name="category" id="category">
+        <option value="All">Todas</option>
+        {% for c in categories %}
+            <option value="{{ c }}" {% if request.GET.category == c %}selected{% endif %}>{{ c }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="tag">Etiqueta:</label>
+    <select name="tag" id="tag">
+        <option value="All">Todas</option>
+        {% for t in tags %}
+            <option value="{{ t.name }}" {% if request.GET.tag == t.name %}selected{% endif %}>{{ t.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="price_min">Precio Mínimo:</label>
+    <input type="number" name="price_min" id="price_min" value="{{ request.GET.price_min }}">
+
+    <label for="price_max">Precio Máximo:</label>
+    <input type="number" name="price_max" id="price_max" value="{{ request.GET.price_max }}">
+
+    <button type="submit">Filtrar</button>
+</form>
+
+<hr>
+
+<h3>Productos:</h3>
+<ul>
+    {% for product in products %}
+        <li>
+            <strong>Nombre:</strong> {{ product.name }}<br>
+            <strong>Precio:</strong> ${{ product.price }}<br>
+            <strong>Categoría:</strong> {{ product.category }}<br>
+            <strong>Descripción:</strong> {{ product.description|default:"Sin descripción" }}<br>
+            <strong>Tags:</strong> 
+            {% for tag in product.tags.all %}
+                {{ tag.name }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                Sin etiquetas
+            {% endfor %}
+        </li>
+        <hr>
+    {% empty %}
+        <li>No hay productos registrados.</li>
+    {% endfor %}
+</ul>
+<!-- AQUI TERMINA EL FILTRO -->
+ 
         <a href="{% url 'logout' %}">Cerrar sesión</a>
     </div>
 </body>
