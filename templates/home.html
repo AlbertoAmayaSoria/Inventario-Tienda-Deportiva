@@ -44,17 +44,26 @@
 <h3>Productos:</h3>
 <ul>
     {% for product in products %}
-        <li>
-            <strong>Nombre:</strong> {{ product.name }}<br>
-            <strong>Precio:</strong> ${{ product.price }}<br>
-            <strong>Categoría:</strong> {{ product.category }}<br>
-            <strong>Descripción:</strong> {{ product.description|default:"Sin descripción" }}<br>
-            <strong>Tags:</strong> 
-            {% for tag in product.tags.all %}
-                {{ tag.name }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-                Sin etiquetas
-            {% endfor %}
+        <li style="display: flex; align-items: center; margin-bottom: 20px;">
+            <div style="flex: 1;">
+                <strong>Nombre:</strong> {{ product.name }}<br>
+                <strong>Precio:</strong> ${{ product.price }}<br>
+                <strong>Categoría:</strong> {{ product.category }}<br>
+                <strong>Descripción:</strong> {{ product.description|default:"Sin descripción" }}<br>
+                <strong>Tags:</strong> 
+                {% for tag in product.tags.all %}
+                    {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    Sin etiquetas
+                {% endfor %}
+            </div>
+            <div>
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 150px; height: auto; margin-left: 20px;">
+                {% else %}
+                    <p>Sin imagen</p>
+                {% endif %}
+            </div>
         </li>
         <hr>
     {% empty %}

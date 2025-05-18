@@ -19,6 +19,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts import views
+#para imagenes
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +30,6 @@ urlpatterns = [
     path('products/', views.products, name='products'),
     path('customer/', views.customer, name='customer'),
     path('register/', views.register_view, name='register'),
-    path('panel/', views.panel, name='panel')
-]
+    path('panel/', views.panel, name='panel') 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
