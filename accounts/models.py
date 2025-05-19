@@ -19,13 +19,12 @@ class Tag(models.Model):
 
 class Product(models.Model):
     CATEGORY = (
-        ('Camisetas', 'Camisetas'),
+        ('Ropa', 'Ropa'),
         ('Calzado', 'Calzado'),
-        ('Pelotas', 'Pelotas'),
-        ('Pulseras', 'Pulseras'),
-        ('Termos', 'Termos'),
-        ('Toallas','Toallas'),
-        ('Guantes','Guantes')
+        ('Accesorios', 'Accesorios'),
+        ('Equipamiento', 'Equipamiento'),
+        ('Tecnología', 'Tecnología'),
+        ('Nutrición','Nutrición')
     )
 
     name = models.CharField(max_length=200, null=True)
@@ -34,6 +33,7 @@ class Product(models.Model):
     description = models.CharField(max_length=200, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     tags = models.ManyToManyField(Tag)
+    image = models.ImageField(upload_to='product_images/', null=True, blank=True) #imagenes
 
     def __str__(self):
         return self.name 
