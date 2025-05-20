@@ -8,9 +8,9 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),  # Ruta para el dashboard
     path('register/', views.register_view, name='register'),
     path('customer/<str:pk>', views.customer, name='customer'),
-    path('create_order/<str:pk>', views.createOrder, name='create_order'),
-    path('update_order/<str:pk>', views.updateOrder, name='update_order'),
-    path('delete_order/<str:pk>', views.deleteOrder, name='delete_order'),
+    path('create_order/<str:pk>/', views.createOrder, name='create_order'),
+    path('update_order/<str:pk>/', views.updateOrder, name='update_order'),
+    path('delete_order/<str:pk>/', views.deleteOrder, name='delete_order'),
     path('panel/', views.panel, name='panel'),
     path('', views.home, name='home')
 ]

@@ -124,7 +124,7 @@ def createOrder(request, pk):
 
         if formset.is_valid():
             formset.save()
-            return redirect('panel/')
+            return redirect('/panel/')
 
     context = {'formset': formset}
     return render(request, 'order_form.html', context)
