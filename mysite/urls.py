@@ -22,9 +22,13 @@ from accounts import views
 #para imagenes
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('contacto/', views.contacto, name='contacto'),
     path('accounts/', include('accounts.urls')),  # Accede a las URLs de la app 'accounts'
     path('', views.home, name='home'),  # Ruta raíz para la vista de inicio (home)
     path('products/', views.products, name='products'),

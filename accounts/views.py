@@ -152,3 +152,6 @@ def deleteOrder(request, pk):
     
     context = {'item': order}
     return render(request, 'delete.html', context)
+
+def contacto(request):
+    return render(request, 'contacto.html')

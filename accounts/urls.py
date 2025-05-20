@@ -1,5 +1,6 @@
 # accounts/urls.py
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views  # Importa las vistas de la app 'accounts'
 
 urlpatterns = [
@@ -7,6 +8,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),  # Ruta para cerrar sesión
     path('dashboard/', views.dashboard, name='dashboard'),  # Ruta para el dashboard
     path('register/', views.register_view, name='register'),
+    path('contacto/', views.contacto, name='contacto'),
     path('customer/<str:pk>', views.customer, name='customer'),
     path('create_order/<str:pk>/', views.createOrder, name='create_order'),
     path('update_order/<str:pk>/', views.updateOrder, name='update_order'),
