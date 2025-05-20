@@ -56,7 +56,11 @@ def home(request):
     price_min = request.GET.get('price_min')
     price_max = request.GET.get('price_max')
 
+    # Todos los productos
     products = Product.objects.all()
+
+    # Productos destacados: siempre los mismos
+    featured_products = Product.objects.filter(is_featured=True)
 
     if category and category != 'All':
         products = products.filter(category=category)
@@ -76,6 +80,7 @@ def home(request):
         'products': products,
         'categories': categories,
         'tags': tags,
+        'featured_products': featured_products,  # usados en destacados
     }
     return render(request, 'home.html', context)
 

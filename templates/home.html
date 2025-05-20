@@ -85,16 +85,16 @@ function scrollDestacados(direction) {
             <button class="scroll-btn left" onclick="scrollDestacados(-1)">&#10094;</button>
 
             <div class="productos-scroll" id="destacados-scroll">
-                {% for product in products %}
-                    <div class="producto-scroll">
-                        {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                        {% else %}
-                            <img src="{% static 'img/default-product.png' %}" alt="Sin imagen">
-                        {% endif %}
-                        <p>{{ product.name }}</p>
-                        <span>${{ product.price }}</span>
-                    </div>
+                {% for product in featured_products %}
+                        <div class="producto-scroll">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <img src="{% static 'img/default-product.png' %}" alt="Sin imagen">
+                            {% endif %}
+                            <p>{{ product.name }}</p>
+                            <span>${{ product.price }}</span>
+                        </div>
                 {% empty %}
                     <p style="padding: 20px; text-align: center; width: 100%;">
                         No hay productos destacados.
