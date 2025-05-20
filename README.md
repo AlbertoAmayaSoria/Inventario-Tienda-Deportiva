@@ -148,8 +148,6 @@ pipenv install django
 pipenv install pillow
 ```
 
-> Si alguien del equipo instala una nueva librería, por favor notifíquenlo para evitar errores el día de la demostración.
-
 ---
 
 ## ⚠️ NOTAS FINALES
