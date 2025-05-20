@@ -79,28 +79,32 @@ function scrollDestacados(direction) {
     <hr>
 
     <!-- PRODUCTOS DESTACADOS -->
-<section class="destacados">
-    <h2>Destacados</h2>
-    <div class="scroll-container">
-        <button class="scroll-btn left" onclick="scrollDestacados(-1)">&#10094;</button>
-        
-        <div class="productos-scroll" id="destacados-scroll">
-            {% for product in products %}
-                <div class="producto-scroll">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                    {% else %}
-                        <img src="{% static 'img/default-product.png' %}" alt="Sin imagen">
-                    {% endif %}
-                    <p>{{ product.name }}</p>
-                    <span>${{ product.price }}</span>
-                </div>
-            {% endfor %}
+    <section class="destacados">
+        <h2>Destacados</h2>
+        <div class="scroll-container">
+            <button class="scroll-btn left" onclick="scrollDestacados(-1)">&#10094;</button>
+
+            <div class="productos-scroll" id="destacados-scroll">
+                {% for product in products %}
+                    <div class="producto-scroll">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{% static 'img/default-product.png' %}" alt="Sin imagen">
+                        {% endif %}
+                        <p>{{ product.name }}</p>
+                        <span>${{ product.price }}</span>
+                    </div>
+                {% empty %}
+                    <p style="padding: 20px; text-align: center; width: 100%;">
+                        No hay productos destacados.
+                    </p>
+                {% endfor %}
+            </div>
+
+            <button class="scroll-btn right" onclick="scrollDestacados(1)">&#10095;</button>
         </div>
-        
-        <button class="scroll-btn right" onclick="scrollDestacados(1)">&#10095;</button>
-    </div>
-</section>
+    </section>
 
     <!-- LISTADO DETALLADO -->
     <section class="listado-detallado">
