@@ -6,13 +6,28 @@
     <title>LCC Tienda Deportiva - Inicio</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
+<script>
+function scrollDestacados(direction) {
+    const container = document.getElementById("destacados-scroll");
+    const scrollAmount = 200;
+    const children = Array.from(container.children);
+
+    if (direction === 1) {
+        // Move first item to end for infinite loop
+        container.appendChild(children[0]);
+    } else {
+        // Move last item to start for infinite loop
+        container.insertBefore(children[children.length - 1], children[0]);
+    }
+}
+</script>
 <body>
     <!-- HEADER y NAV -->
     <header class="header">
         <h1>LCC Tienda Deportiva</h1>
         <nav>
             <h1 class="titulo-tienda">Tienda LCC Unison</h1>
-            <a href="{% url 'login' %}" class="nav-button">Inicio</a>
+            <a href="{% url 'home' %}" class="nav-button">Inicio</a>
             <a href="{% url 'contacto' %}" class="nav-button">Contacto</a>
             <a href="mi_cuenta.html" class="nav-button">Mi cuenta</a>
         </nav>
@@ -64,11 +79,14 @@
     <hr>
 
     <!-- PRODUCTOS DESTACADOS -->
-    <section class="destacados">
-        <h2>Destacados</h2>
-        <div class="productos">
+<section class="destacados">
+    <h2>Destacados</h2>
+    <div class="scroll-container">
+        <button class="scroll-btn left" onclick="scrollDestacados(-1)">&#10094;</button>
+        
+        <div class="productos-scroll" id="destacados-scroll">
             {% for product in products %}
-                <div class="producto">
+                <div class="producto-scroll">
                     {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}">
                     {% else %}
@@ -77,11 +95,12 @@
                     <p>{{ product.name }}</p>
                     <span>${{ product.price }}</span>
                 </div>
-            {% empty %}
-                <p>No hay productos destacados.</p>
             {% endfor %}
         </div>
-    </section>
+        
+        <button class="scroll-btn right" onclick="scrollDestacados(1)">&#10095;</button>
+    </div>
+</section>
 
     <!-- LISTADO DETALLADO -->
     <section class="listado-detallado">
