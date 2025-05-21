@@ -27,6 +27,7 @@ cd Inventario-Tienda-Deportiva
 ### 2. Crear entorno virtual con Pipenv
 
 ```bash
+python -m venv venv   (En el aviso, seleccione Si)
 pipenv install
 pipenv shell
 ```
