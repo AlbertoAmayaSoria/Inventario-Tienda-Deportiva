@@ -1,4 +1,3 @@
-
 # 🏪 Inventario-Tienda-Deportiva
 
 Sistema web ficticio que permite consultar el inventario de una tienda deportiva. Cualquier persona puede acceder a la visualización de productos, pero solo los empleados autorizados pueden realizar compras o modificar el inventario.
@@ -58,12 +57,14 @@ Luego accede al panel admin en:
 |-----------------------------------------------|--------|----------------------------------------------------|
 | Visualización de productos por visitantes      | ✔      | Vista `products()` muestra productos disponibles   |
 | Filtro por categoría, precio y etiquetas       | ✔      | Soportado mediante campos de modelo                |
-| Carga de imágenes para productos               | ✔     | El modelo contiene `ImageField`             |
+| Carga de imágenes para productos               | ✔      | El modelo contiene `ImageField`                   |
 | Gestión CRUD desde panel de administrador      | ✔      | Admin de Django habilitado                         |
 | Autenticación de usuarios                      | ✔      | Login, logout y registro implementados             |
 | Roles diferenciados: cliente / empleado        | ❓      | A definir                                          |
 | Registro de pedidos                            | ✔      | Vista `panel()` muestra órdenes por estado         |
 | Historial o bitácora de acciones               | ❌     | No implementado por el momento                     |
+| Agregar productos al carrito                   | ✔      | Botón "Añadir al carrito" disponible               |
+| Eliminar productos del carrito                 | ✔      | Opción de "Eliminar" en el carrito implementada    |
 
 ---
 
@@ -76,6 +77,7 @@ Luego accede al panel admin en:
 - `description`: descripción
 - `date_created`: fecha de creación automática
 - `tags`: etiquetas relacionadas (many-to-many)
+- `image`: imagen del producto
 
 ### `Order`
 - `customer`: relación con el cliente
@@ -93,16 +95,19 @@ Luego accede al panel admin en:
 
 ## 🌐 VISTAS Y RUTAS
 
-| URL           | Vista           | Descripción                                  |
-|---------------|------------------|----------------------------------------------|
-| `/`           | `home`           | Página de inicio                             |
-| `/login/`     | `login_view`     | Iniciar sesión                               |
-| `/logout/`    | `logout_view`    | Cerrar sesión                                |
-| `/register/`  | `register_view`  | Registro de usuario                          |
-| `/dashboard/` | `dashboard`      | Dashboard de usuario                         |
-| `/panel/`     | `panel`          | Panel resumen de órdenes y clientes          |
-| `/products/`  | `products`       | Vista con todos los productos disponibles    |
-| `/customer/`  | `customer`       | Vista de información de clientes             |
+| URL                        | Vista             | Descripción                                     |
+|----------------------------|-------------------|-------------------------------------------------|
+| `/`                        | `home`            | Página de inicio                                |
+| `/login/`                  | `login_view`      | Iniciar sesión                                  |
+| `/logout/`                 | `logout_view`     | Cerrar sesión                                   |
+| `/register/`               | `register_view`   | Registro de usuario                             |
+| `/dashboard/`              | `dashboard`       | Dashboard de usuario                            |
+| `/panel/`                  | `panel`           | Panel resumen de órdenes y clientes             |
+| `/products/`               | `products`        | Vista con todos los productos disponibles       |
+| `/customer/<str:pk>`       | `customer`        | Vista de información de clientes                |
+| `/add-to-cart/<int:id>/`   | `add_to_cart`     | Agregar producto al carrito                     |
+| `/cart/`                   | `cart_view`       | Vista del carrito de compras                    |
+| `/remove-from-cart/<int:id>/` | `remove_from_cart` | Eliminar producto del carrito             |
 
 ---
 
