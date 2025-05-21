@@ -243,3 +243,17 @@ def confirm_order(request):
     request.session['cart'] = {}
     messages.success(request, 'Orden registrada exitosamente.')
     return redirect('home')
+
+@login_required
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    product_id_str = str(product_id)
+
+    if product_id_str in cart:
+        del cart[product_id_str]
+        request.session['cart'] = cart
+        messages.success(request, "Producto eliminado del carrito.")
+    else:
+        messages.error(request, "El producto no estaba en el carrito.")
+
+    return redirect('view_cart')

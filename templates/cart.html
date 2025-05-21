@@ -15,16 +15,32 @@
         </nav>
     </header>
 
+    <!-- mensajes -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <main class="carrito">
         {% if cart_items %}
             <ul>
                 {% for item in cart_items %}
-                    <li style="margin-bottom: 20px;">
-                        <strong>{{ item.product.name }}</strong><br>
-                        Precio: ${{ item.product.price }}<br>
-                        Cantidad: {{ item.quantity }}<br>
-                        Subtotal: ${{ item.subtotal }}
-                    </li>
+                <li style="margin-bottom: 20px;">
+                    <strong>{{ item.product.name }}</strong><br>
+                    Precio: ${{ item.product.price }}<br>
+                    Cantidad: {{ item.quantity }}<br>
+                    Subtotal: ${{ item.subtotal }}<br>
+
+                    <form method="post" action="{% url 'remove_from_cart' item.product.id %}" style="margin-top: 5px;">
+                        {% csrf_token %}
+                        <button type="submit" style="background-color: red; color: white;">Eliminar</button>
+                    </form>
+                </li>
                 {% endfor %}
             </ul>
 

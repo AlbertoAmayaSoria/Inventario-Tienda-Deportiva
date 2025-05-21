@@ -6,22 +6,57 @@
     <title>LCC Tienda Deportiva - Inicio</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<script>
-function scrollDestacados(direction) {
-    const container = document.getElementById("destacados-scroll");
-    const scrollAmount = 200;
-    const children = Array.from(container.children);
 
-    if (direction === 1) {
-        // Move first item to end for infinite loop
-        container.appendChild(children[0]);
-    } else {
-        // Move last item to start for infinite loop
-        container.insertBefore(children[children.length - 1], children[0]);
+<!-- SCRIPT PARA SCROLL EN DESTACADOS -->
+<script>
+    function scrollDestacados(direction) {
+        const container = document.getElementById("destacados-scroll");
+        const scrollAmount = 200;
+        const children = Array.from(container.children);
+
+        if (direction === 1) {
+            // Move first item to end for infinite loop
+            container.appendChild(children[0]);
+        } else {
+            // Move last item to start for infinite loop
+            container.insertBefore(children[children.length - 1], children[0]);
+        }
     }
-}
+</script>
+<!-- SCRIPT PARA MENSAJES -->
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            const messageList = document.querySelector('.messages');
+            const messages = messageList ? messageList.querySelectorAll('li') : [];
+
+            messages.forEach(msg => {
+                msg.style.transition = "opacity 0.5s ease-out";
+                msg.style.opacity = 0;
+                setTimeout(() => msg.remove(), 500);
+            });
+
+            // Eliminar el contenedor <ul> después de que se quiten todos los mensajes
+            setTimeout(() => {
+                if (messageList && messageList.children.length === 0) {
+                    messageList.remove();
+                }
+            }, 800); // Esperamos un poco más que el fade out
+        }, 3000);
+    };
 </script>
 <body>
+    <!-- MENSAJES -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <!-- HEADER y NAV -->
     <header class="header">
         <h1>LCC Tienda Deportiva</h1>
