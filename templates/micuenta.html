@@ -15,7 +15,7 @@
             <a href="{% url 'contacto' %}" class="nav-button">Contacto</a>
             <a href="{% url 'micuenta' %}" class="nav-button">Mi cuenta</a>
             {% if user.is_staff %}
-                <a href="/admin/" class="nav-button">Panel de Administración</a>
+                <a href="/panel/" class="nav-button">Panel de Administración</a>
             {% endif %}
             <a href="{% url 'view_cart' %}" class="nav-button">Ver Carrito</a>
         </nav>
