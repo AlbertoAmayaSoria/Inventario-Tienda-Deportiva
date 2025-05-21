@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .models import Customer
 from django.forms import inlineformset_factory
 from accounts.models import *
 from .forms import OrderForm
@@ -18,6 +19,12 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+
+            if Customer.objects.filter(name=username).exists():
+                print("Customer Exists")
+            else:
+                Customer.objects.create(name=username, password=password)
+                
             return redirect('home')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
@@ -29,11 +36,15 @@ def register_view(request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
+        phone = request.POST['phone']
+
+        name = request.POST['username']
 
         if User.objects.filter(username=username).exists():
             messages.error(request, 'El nombre de usuario ya existe.')
         else:
             user = User.objects.create_user(username=username, email=email, password=password)
+            Customer.objects.create(name=name, email=email, password=password, phone=phone)
             login(request, user)
             return redirect('home')
 
