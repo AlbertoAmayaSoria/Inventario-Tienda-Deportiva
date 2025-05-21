@@ -60,7 +60,7 @@ Luego accede al panel admin en:
 | Carga de imágenes para productos               | ✔      | El modelo contiene `ImageField`                   |
 | Gestión CRUD desde panel de administrador      | ✔      | Admin de Django habilitado                         |
 | Autenticación de usuarios                      | ✔      | Login, logout y registro implementados             |
-| Roles diferenciados: cliente / empleado        | ❓      | A definir                                          |
+| Roles diferenciados: cliente / empleado        | ✔      | A definir                                          |
 | Registro de pedidos                            | ✔      | Vista `panel()` muestra órdenes por estado         |
 | Historial o bitácora de acciones               | ❌     | No implementado por el momento                     |
 | Agregar productos al carrito                   | ✔      | Botón "Añadir al carrito" disponible               |
