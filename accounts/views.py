@@ -9,6 +9,8 @@ from django.shortcuts import render
 from django.forms import inlineformset_factory
 from accounts.models import *
 from .forms import OrderForm
+from django.http import HttpResponseRedirect # para carrito
+from django.urls import reverse # para carrito
 
 
 def login_view(request):
@@ -160,3 +162,18 @@ def deleteOrder(request, pk):
 
 def contacto(request):
     return render(request, 'contacto.html')
+
+@login_required
+def add_to_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    
+    # Obtener o crear carrito en sesión
+    cart = request.session.get('cart', {})
+
+    if str(product_id) in cart:
+        cart[str(product_id)] += 1
+    else:
+        cart[str(product_id)] = 1
+
+    request.session['cart'] = cart  # Guardar carrito actualizado en sesión
+    return HttpResponseRedirect(reverse('home'))

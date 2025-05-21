@@ -99,6 +99,11 @@ function scrollDestacados(direction) {
                             {% endif %}
                             <p>{{ product.name }}</p>
                             <span>${{ product.price }}</span>
+                            <!-- Agregar a carrito -->
+                            <form method="post" action="{% url 'add_to_cart' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit">Agregar al carrito</button>
+                            </form>
                         </div>
                 {% empty %}
                     <p style="padding: 20px; text-align: center; width: 100%;">
@@ -128,6 +133,10 @@ function scrollDestacados(direction) {
                         {% empty %}
                             Sin etiquetas
                         {% endfor %}
+                        <form method="post" action="{% url 'add_to_cart' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Agregar al carrito</button>
+                        </form>
                     </div>
                     <div>
                         {% if product.image %}
