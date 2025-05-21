@@ -11,6 +11,9 @@ from .forms import OrderForm
 # 🛒 Carrito en memoria (solo para uso en sesión del servidor)
 cart = []
 
+# Sesion del usuario logeado
+currentUser = ""
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -18,6 +21,7 @@ def login_view(request):
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            currentUser = username
             login(request, user)
 
             if Customer.objects.filter(name=username).exists():
@@ -184,4 +188,14 @@ def remove_from_cart(request, product_id):
     global cart
     cart = [p for p in cart if p.id != product_id]
     messages.info(request, "Producto eliminado del carrito.")
+    return redirect('cart_view')
+
+@login_required
+def cart_purchase(request):
+    customer = Customer.objects.get(name=currentUser)
+
+    for p in cart:
+        Order.objects.create(customer)
+
+    messages.info(request, "Compra completada.")
     return redirect('cart_view')
