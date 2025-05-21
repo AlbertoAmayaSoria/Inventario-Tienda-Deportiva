@@ -30,6 +30,24 @@
         {% else %}
             <p>No has iniciado sesión. <a href="{% url 'login' %}">Iniciar sesión</a></p>
         {% endif %}
+        <h3>Mis Órdenes</h3>
+        {% if orders %}
+        <ul>
+            {% for order in orders %}
+                <li>
+                    <strong>{{ order.product.name }}</strong><br>
+                    Precio: ${{ order.product.price }}<br>
+                    Fecha: {{ order.date_created|date:"d/m/Y" }}<br>
+                    Estado: {{ order.status }}
+                </li>
+
+                <hr>
+
+            {% endfor %}
+        </ul>
+            {% else %}
+                <p>No tienes órdenes registradas.</p>
+        {% endif %}
     </div>
 </body>
 </html>

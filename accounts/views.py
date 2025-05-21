@@ -165,8 +165,23 @@ def contacto(request):
     return render(request, 'contacto.html')
 
 #@login_required
+#def micuenta_view(request):
+#    return render(request, 'micuenta.html')
+
+@login_required
 def micuenta_view(request):
-    return render(request, 'micuenta.html')
+    try:
+        # Buscar al Customer por el email del usuario autenticado
+        customer = Customer.objects.get(email=request.user.email)
+        orders = Order.objects.filter(customer=customer)
+    except Customer.DoesNotExist:
+        customer = None
+        orders = []
+
+    return render(request, 'micuenta.html', {
+        'customer': customer,
+        'orders': orders
+    })
 
 #****************************************************************
 # CARRITO
