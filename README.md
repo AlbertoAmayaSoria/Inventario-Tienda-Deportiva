@@ -148,3 +148,15 @@ pipenv install pillow
 - Este proyecto es educativo y no está conectado a un sistema real de ventas.
 - Se recomienda iniciar sesión como superusuario para acceder al panel completo.
 - Las imágenes se guardan localmente.
+
+---
+
+## 🙌 CRÉDITOS Y RECURSOS DE APOYO
+
+Este proyecto se desarrolló como parte de un ejercicio académico. Durante su desarrollo se tomaron referencias y apoyo de materiales públicos, incluyendo:
+
+- **Tutorial Django para principiantes** por Dennis Ivy  
+  [https://www.youtube.com/watch?v=QvTyqta3OJo&list=PL-51WBLyFTg2vW-_6XBoUpE7vpmoR3ztO&index=3](https://www.youtube.com/watch?v=QvTyqta3OJo&list=PL-51WBLyFTg2vW-_6XBoUpE7vpmoR3ztO&index=3)
+
+- **Sistema de Inventario con Django** por Amigoscode  
+  [https://www.youtube.com/watch?v=bFsIXYygsg4&list=PLCC34OHNcOtpRfBYk-8y0GMO4i1p1zn50&index=4](https://www.youtube.com/watch?v=bFsIXYygsg4&list=PLCC34OHNcOtpRfBYk-8y0GMO4i1p1zn50&index=4)
