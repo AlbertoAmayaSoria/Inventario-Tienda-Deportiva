@@ -23,6 +23,7 @@
         }
     }
 </script>
+
 <!-- SCRIPT PARA MENSAJES -->
 <script>
     window.onload = function () {
@@ -45,6 +46,7 @@
         }, 3000);
     };
 </script>
+
 <body>
     <!-- MENSAJES -->
     {% if messages %}
@@ -64,7 +66,7 @@
             <h1 class="titulo-tienda">Tienda LCC Unison</h1>
             <a href="{% url 'home' %}" class="nav-button">Inicio</a>
             <a href="{% url 'contacto' %}" class="nav-button">Contacto</a>
-            <a href="mi_cuenta.html" class="nav-button">Mi cuenta</a>
+            <a href="{% url 'micuenta' %}" class="nav-button">Mi cuenta</a>
             {% if user.is_staff %}
                 <!-- <div style="text-align: center; margin-top: 20px;"> -->
                 <a href="/admin/" class="nav-button">Panel de Administración</a>
@@ -205,6 +207,7 @@
 
     <a href="{% url 'logout' %}">Cerrar sesión</a>
 
+    <!-- SCRIPT UTILIZADO EN BUSQUEDA -->
     <script>
     // Si quieres hacer el filtro rápido en el input del buscador (solo visual)
     function filtrarProductos(text) {

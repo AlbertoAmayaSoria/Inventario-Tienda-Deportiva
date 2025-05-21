@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Cuenta - LCC Tienda Deportiva</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="header">
+        <h1>LCC Tienda Deportiva</h1>
+        <nav>
+            <h1 class="titulo-tienda">Tienda LCC Unison</h1>
+            <a href="{% url 'home' %}" class="nav-button">Inicio</a>
+            <a href="{% url 'contacto' %}" class="nav-button">Contacto</a>
+            <a href="{% url 'micuenta' %}" class="nav-button">Mi cuenta</a>
+            {% if user.is_staff %}
+                <a href="/admin/" class="nav-button">Panel de Administración</a>
+            {% endif %}
+            <a href="{% url 'view_cart' %}" class="nav-button">Ver Carrito</a>
+        </nav>
+    </header>
+
+    <div class="contact-container">
+        <h2>Mi cuenta</h2>
+        {% if user.is_authenticated %}
+            <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+            <p><strong>Correo:</strong> {{ user.email }}</p>
+            <a href="{% url 'logout' %}">Cerrar sesión</a>
+        {% else %}
+            <p>No has iniciado sesión. <a href="{% url 'login' %}">Iniciar sesión</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>

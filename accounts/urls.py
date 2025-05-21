@@ -16,6 +16,7 @@ urlpatterns = [
     path('panel/', views.panel, name='panel'),
     path('', views.home, name='home'),
     path('carrito/', views.view_cart, name='view_cart'),
-    path('confirmar-orden/', views.confirm_order, name='confirm_order')
+    path('confirmar-orden/', views.confirm_order, name='confirm_order'),
+    path('micuenta/', views.micuenta_view, name='micuenta')
 ]
 

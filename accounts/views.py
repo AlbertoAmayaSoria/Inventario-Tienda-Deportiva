@@ -164,6 +164,13 @@ def deleteOrder(request, pk):
 def contacto(request):
     return render(request, 'contacto.html')
 
+#@login_required
+def micuenta_view(request):
+    return render(request, 'micuenta.html')
+
+#****************************************************************
+# CARRITO
+#****************************************************************
 @login_required
 def add_to_cart(request, product_id):
     product = Product.objects.get(id=product_id)
