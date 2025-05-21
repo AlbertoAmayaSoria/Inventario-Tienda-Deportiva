@@ -30,6 +30,11 @@ function scrollDestacados(direction) {
             <a href="{% url 'home' %}" class="nav-button">Inicio</a>
             <a href="{% url 'contacto' %}" class="nav-button">Contacto</a>
             <a href="mi_cuenta.html" class="nav-button">Mi cuenta</a>
+            {% if user.is_staff %}
+                <!-- <div style="text-align: center; margin-top: 20px;"> -->
+                <a href="/admin/" class="nav-button">Panel de Administración</a>
+                <!-- </div> -->
+            {% endif %}
         </nav>
     </header>
 
