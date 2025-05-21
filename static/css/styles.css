@@ -238,7 +238,7 @@ select {
     border-radius: 5px;
 }
 
-button:not(.scroll-btn) {
+button:not(.scroll-btn):not(.btn-carrito) {
     width: 100%;
     padding: 10px;
     margin-top: 20px;
@@ -457,4 +457,46 @@ a:hover {
 
 .contact-container form button:hover {
     background-color: #0949a0;
+}
+
+/* Carrito */
+.btn-carrito {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    width: auto;
+    min-width: 100px;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-carrito:hover {
+    background-color: #0056b3;
+}
+
+/* Boton eliminar */
+.btn-carrito.eliminar {
+    background-color: #dc3545;
+}
+
+.btn-carrito.eliminar:hover {
+    background-color: #a71d2a;
+}
+
+/* Boton eliminar */
+.btn-carrito.confirmarOrden {
+    background-color: #007bff;
+    display: block;           /* Necesario para usar margin auto */
+    margin: 30px auto 0 auto; /* Espaciado arriba y centrado horizontalmente */
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.btn-carrito.confirmarOrden:hover {
+    background-color: #0056b3;
 }

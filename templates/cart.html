@@ -38,7 +38,7 @@
 
                     <form method="post" action="{% url 'remove_from_cart' item.product.id %}" style="margin-top: 5px;">
                         {% csrf_token %}
-                        <button type="submit" style="background-color: red; color: white;">Eliminar</button>
+                        <button type="submit" class="btn-carrito eliminar">Eliminar</button>
                     </form>
                 </li>
                 {% endfor %}
@@ -48,7 +48,7 @@
 
             <form method="post" action="{% url 'confirm_order' %}">
                 {% csrf_token %}
-                <button type="submit">Confirmar Orden</button>
+                <button type="submit" class="btn-carrito confirmarOrden">Confirmar Orden</button>
             </form>
         {% else %}
             <p>Tu carrito está vacío.</p>

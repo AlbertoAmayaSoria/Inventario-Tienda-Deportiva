@@ -113,7 +113,7 @@
             <label for="price_max">Precio Máximo:</label>
             <input type="number" name="price_max" id="price_max" value="{{ request.GET.price_max }}">
 
-            <button type="submit">Filtrar</button>
+            <button type="submit" class="btn-carrito">Filtrar</button>
         </form>
     </section>
 
@@ -135,11 +135,13 @@
                             {% endif %}
                             <p>{{ product.name }}</p>
                             <span>${{ product.price }}</span>
+
                             <!-- Agregar a carrito -->
                             <form method="post" action="{% url 'add_to_cart' product.id %}">
                                 {% csrf_token %}
-                                <button type="submit">Agregar al carrito</button>
+                                <button type="submit" class="btn-carrito">Agregar al carrito</button>
                             </form>
+
                         </div>
                 {% empty %}
                     <p style="padding: 20px; text-align: center; width: 100%;">
@@ -157,7 +159,8 @@
         <h3>Productos detallados</h3>
         <ul>
             {% for product in products %}
-                <li style="display: flex; align-items: center; margin-bottom: 20px;">
+                <li class="producto" style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <p class="nombre-buscable" style="display: none;">{{ product.name }}</p>
                     <div style="flex: 1;">
                         <strong>Nombre:</strong> {{ product.name }}<br>
                         <strong>Precio:</strong> ${{ product.price }}<br>
@@ -181,8 +184,8 @@
                             <p>Sin imagen</p>
                         {% endif %}
                     </div>
+                    <hr>
                 </li>
-                <hr>
             {% empty %}
                 <li>No hay productos registrados.</li>
             {% endfor %}
@@ -206,9 +209,14 @@
     // Si quieres hacer el filtro rápido en el input del buscador (solo visual)
     function filtrarProductos(text) {
         text = text.toLowerCase();
-        document.querySelectorAll('.producto p').forEach(p => {
+        document.querySelectorAll('.producto .nombre-buscable').forEach(p => {
             const prod = p.textContent.toLowerCase();
-            p.parentElement.style.display = prod.includes(text) ? 'block' : 'none';
+            const item = p.parentElement;
+            if (prod.includes(text)) {
+                item.style.display = "flex"; // restaurar display original del <li>
+            } else {
+                item.style.display = "none";
+            }
         });
     }
     </script>
