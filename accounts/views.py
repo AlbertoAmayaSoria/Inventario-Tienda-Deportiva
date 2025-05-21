@@ -192,10 +192,13 @@ def remove_from_cart(request, product_id):
 
 @login_required
 def cart_purchase(request):
-    customer = Customer.objects.get(name=currentUser)
 
-    for p in cart:
-        Order.objects.create(customer)
+    customer = Customer.objects.get(name=request.user.username)
 
-    messages.info(request, "Compra completada.")
+    if request.method == 'POST':
+        for item in cart:
+            Order.objects.create(customer=customer, product=item, status='Pendiente')
+        cart.clear()
+        return redirect('home')
+        
     return redirect('cart_view')

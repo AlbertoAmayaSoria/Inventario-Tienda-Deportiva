@@ -23,7 +23,10 @@
         </ul>
         <div class="mt-4">
             <a href="{% url 'home' %}" class="btn btn-primary">Seguir comprando</a>
-            <a href="{% url 'home' %}" class="btn btn-primary">Comprar</a>
+            <form method="post" action="{% url 'cart_purchase' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-info btn-sm">Comprar</button>
+            </form>
         </div>
     {% else %}
         <div class="alert alert-info mt-3">
