@@ -58,7 +58,7 @@ Luego accede al panel admin en:
 |-----------------------------------------------|--------|----------------------------------------------------|
 | Visualización de productos por visitantes      | ✔      | Vista `products()` muestra productos disponibles   |
 | Filtro por categoría, precio y etiquetas       | ✔      | Soportado mediante campos de modelo                |
-| Carga de imágenes para productos               | ✔     | El modelo aún no contiene `ImageField`             |
+| Carga de imágenes para productos               | ✔     | El modelo contiene `ImageField`             |
 | Gestión CRUD desde panel de administrador      | ✔      | Admin de Django habilitado                         |
 | Autenticación de usuarios                      | ✔      | Login, logout y registro implementados             |
 | Roles diferenciados: cliente / empleado        | ❓      | A definir                                          |
