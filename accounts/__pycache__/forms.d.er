@@ -1,0 +1,10 @@
+##[pylyzer] failed /home/tito/ProyectoIS/accounts/forms.py 1747713365 154
+.___v_desugar_1 = pyimport "__init__"
+.__init__ = pyimport "__init__"
+.ModelForm: Never
+.___v_desugar_2 = pyimport "models"
+.models = pyimport "models"
+.Order: {models.Order}
+.OrderForm: ClassType
+.OrderForm <: Never
+

@@ -34,6 +34,7 @@ class Product(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     tags = models.ManyToManyField(Tag)
     image = models.ImageField(upload_to='product_images/', null=True, blank=True) #imagenes
+    is_featured = models.BooleanField(default=False, verbose_name='Destacado') #Para destacados en home
 
     def __str__(self):
         return self.name 

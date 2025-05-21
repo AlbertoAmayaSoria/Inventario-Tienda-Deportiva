@@ -22,9 +22,13 @@ from accounts import views
 #para imagenes
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('contacto/', views.contacto, name='contacto'),
     path('accounts/', include('accounts.urls')),  # Accede a las URLs de la app 'accounts'
     path('', views.home, name='home'),  # Ruta raíz para la vista de inicio (home)
     path('products/', views.products, name='products'),
@@ -34,6 +38,8 @@ urlpatterns = [
     path('update_order/<str:pk>/', views.updateOrder, name='update_order'),
     path('delete_order/<str:pk>/', views.deleteOrder, name='delete_order'),
     path('customer/<str:pk>', views.customer, name='customer'),
-    path('panel/', views.panel, name='panel') 
+    path('panel/', views.panel, name='panel'),
+    path('add-to-cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('eliminar-del-carrito/<int:product_id>/', views.remove_from_cart, name='remove_from_cart') 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

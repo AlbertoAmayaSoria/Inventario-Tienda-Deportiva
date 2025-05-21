@@ -9,6 +9,9 @@ from django.shortcuts import render
 from django.forms import inlineformset_factory
 from accounts.models import *
 from .forms import OrderForm
+from django.http import HttpResponseRedirect # para carrito
+from django.urls import reverse # para carrito
+from .models import Product, Order, Customer #para ordenes
 
 
 def login_view(request):
@@ -56,7 +59,11 @@ def home(request):
     price_min = request.GET.get('price_min')
     price_max = request.GET.get('price_max')
 
+    # Todos los productos
     products = Product.objects.all()
+
+    # Productos destacados: siempre los mismos
+    featured_products = Product.objects.filter(is_featured=True)
 
     if category and category != 'All':
         products = products.filter(category=category)
@@ -76,6 +83,7 @@ def home(request):
         'products': products,
         'categories': categories,
         'tags': tags,
+        'featured_products': featured_products,  # usados en destacados
     }
     return render(request, 'home.html', context)
 
@@ -152,3 +160,107 @@ def deleteOrder(request, pk):
     
     context = {'item': order}
     return render(request, 'delete.html', context)
+
+def contacto(request):
+    return render(request, 'contacto.html')
+
+#@login_required
+def micuenta_view(request):
+    return render(request, 'micuenta.html')
+
+#****************************************************************
+# CARRITO
+#****************************************************************
+@login_required
+def add_to_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    
+    # Obtener o crear carrito en sesión
+    cart = request.session.get('cart', {})
+
+    if str(product_id) in cart:
+        cart[str(product_id)] += 1
+    else:
+        cart[str(product_id)] = 1
+
+    request.session['cart'] = cart  # Guardar carrito actualizado en sesión
+    return HttpResponseRedirect(reverse('home'))
+
+@login_required
+def view_cart(request):
+    cart = request.session.get('cart', {})
+    cart_items = []
+    total = 0
+
+    products = Product.objects.filter(id__in=cart.keys())
+
+    for product in products:
+        quantity = cart[str(product.id)]
+        subtotal = product.price * quantity
+        total += subtotal
+        cart_items.append({
+            'product': product,
+            'quantity': quantity,
+            'subtotal': subtotal,
+        })
+
+    return render(request, 'cart.html', {
+        'cart_items': cart_items,
+        'total': total
+    })
+
+#@login_required
+#def confirm_order(request):
+#    if request.method == 'POST':
+#        # Aquí podrías guardar la orden en base de datos si lo deseas
+#        request.session['cart'] = {}  # Limpiar carrito
+#        messages.success(request, 'Orden confirmada exitosamente.')
+#        return redirect('home')
+#    return redirect('view_cart')
+
+@login_required
+def confirm_order(request):
+    cart = request.session.get('cart', {})
+    if not cart:
+        messages.error(request, "Tu carrito está vacío.")
+        return redirect('view_cart')
+
+    user = request.user
+
+    # Obtener o crear un Customer vinculado al usuario actual
+    customer, created = Customer.objects.get_or_create(
+        email=user.email,
+        defaults={
+            'name': user.username,
+            'phone': 'Sin teléfono'
+        }
+    )
+
+    # Crear una orden por cada producto en el carrito
+    for product_id, quantity in cart.items():
+        product = Product.objects.get(id=product_id)
+        for _ in range(quantity):
+            Order.objects.create(
+                customer=customer,
+                product=product,
+                status='Pendiente'
+            )
+
+    # Vaciar el carrito
+    request.session['cart'] = {}
+    messages.success(request, 'Orden registrada exitosamente.')
+    return redirect('home')
+
+@login_required
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    product_id_str = str(product_id)
+
+    if product_id_str in cart:
+        del cart[product_id_str]
+        request.session['cart'] = cart
+        messages.success(request, "Producto eliminado del carrito.")
+    else:
+        messages.error(request, "El producto no estaba en el carrito.")
+
+    return redirect('view_cart')

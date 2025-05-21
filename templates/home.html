@@ -3,77 +3,227 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenido</title>
+    <title>LCC Tienda Deportiva - Inicio</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
+
+<!-- SCRIPT PARA SCROLL EN DESTACADOS -->
+<script>
+    function scrollDestacados(direction) {
+        const container = document.getElementById("destacados-scroll");
+        const scrollAmount = 200;
+        const children = Array.from(container.children);
+
+        if (direction === 1) {
+            // Move first item to end for infinite loop
+            container.appendChild(children[0]);
+        } else {
+            // Move last item to start for infinite loop
+            container.insertBefore(children[children.length - 1], children[0]);
+        }
+    }
+</script>
+
+<!-- SCRIPT PARA MENSAJES -->
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            const messageList = document.querySelector('.messages');
+            const messages = messageList ? messageList.querySelectorAll('li') : [];
+
+            messages.forEach(msg => {
+                msg.style.transition = "opacity 0.5s ease-out";
+                msg.style.opacity = 0;
+                setTimeout(() => msg.remove(), 500);
+            });
+
+            // Eliminar el contenedor <ul> después de que se quiten todos los mensajes
+            setTimeout(() => {
+                if (messageList && messageList.children.length === 0) {
+                    messageList.remove();
+                }
+            }, 800); // Esperamos un poco más que el fade out
+        }, 3000);
+    };
+</script>
+
 <body>
-    <div class="home-container">
-        <h2>Bienvenido a la aplicación</h2>
-        <p>¡Has iniciado sesión correctamente!</p>
-
-<!-- AQUI EMPIEZA EL FILTRO -->
-<h3>Filtrar Productos</h3>
-<form method="get">
-    <label for="category">Categoría:</label>
-    <select name="category" id="category">
-        <option value="All">Todas</option>
-        {% for c in categories %}
-            <option value="{{ c }}" {% if request.GET.category == c %}selected{% endif %}>{{ c }}</option>
+    <!-- MENSAJES -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+            </li>
         {% endfor %}
-    </select>
+    </ul>
+    {% endif %}
 
-    <label for="tag">Etiqueta:</label>
-    <select name="tag" id="tag">
-        <option value="All">Todas</option>
-        {% for t in tags %}
-            <option value="{{ t.name }}" {% if request.GET.tag == t.name %}selected{% endif %}>{{ t.name }}</option>
-        {% endfor %}
-    </select>
+    <!-- HEADER y NAV -->
+    <header class="header">
+        <h1>LCC Tienda Deportiva</h1>
+        <nav>
+            <h1 class="titulo-tienda">Tienda LCC Unison</h1>
+            <a href="{% url 'home' %}" class="nav-button">Inicio</a>
+            <a href="{% url 'contacto' %}" class="nav-button">Contacto</a>
+            <a href="{% url 'micuenta' %}" class="nav-button">Mi cuenta</a>
+            {% if user.is_staff %}
+                <!-- <div style="text-align: center; margin-top: 20px;"> -->
+                <a href="/admin/" class="nav-button">Panel de Administración</a>
+                <!-- </div> -->
+            {% endif %}
+            <a href="{% url 'view_cart' %}" class="nav-button">Ver Carrito</a>
+        </nav>
+    </header>
 
-    <label for="price_min">Precio Mínimo:</label>
-    <input type="number" name="price_min" id="price_min" value="{{ request.GET.price_min }}">
+    <!-- CATEGORÍAS -->
+    <section class="categorias">
+        <div class="categoria">Ofertas</div>
+        <div class="categoria">Calzado</div>
+        <div class="categoria">Equipo</div>
+        <div class="categoria">Ropa</div>
+    </section>
 
-    <label for="price_max">Precio Máximo:</label>
-    <input type="number" name="price_max" id="price_max" value="{{ request.GET.price_max }}">
+    <!-- BUSCADOR -->
+    <section class="buscador">
+        <input type="text" placeholder="Buscar..." oninput="filtrarProductos(this.value)">
+    </section>
 
-    <button type="submit">Filtrar</button>
-</form>
+    <!-- FILTRO EXISTENTE -->
+    <section class="filtro">
+        <h3>Filtrar Productos</h3>
+        <form method="get">
+            <label for="category">Categoría:</label>
+            <select name="category" id="category">
+                <option value="All">Todas</option>
+                {% for c in categories %}
+                    <option value="{{ c }}" {% if request.GET.category == c %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
 
-<hr>
+            <label for="tag">Etiqueta:</label>
+            <select name="tag" id="tag">
+                <option value="All">Todas</option>
+                {% for t in tags %}
+                    <option value="{{ t.name }}" {% if request.GET.tag == t.name %}selected{% endif %}>{{ t.name }}</option>
+                {% endfor %}
+            </select>
 
-<h3>Productos:</h3>
-<ul>
-    {% for product in products %}
-        <li style="display: flex; align-items: center; margin-bottom: 20px;">
-            <div style="flex: 1;">
-                <strong>Nombre:</strong> {{ product.name }}<br>
-                <strong>Precio:</strong> ${{ product.price }}<br>
-                <strong>Categoría:</strong> {{ product.category }}<br>
-                <strong>Descripción:</strong> {{ product.description|default:"Sin descripción" }}<br>
-                <strong>Tags:</strong> 
-                {% for tag in product.tags.all %}
-                    {{ tag.name }}{% if not forloop.last %}, {% endif %}
+            <label for="price_min">Precio Mínimo:</label>
+            <input type="number" name="price_min" id="price_min" value="{{ request.GET.price_min }}">
+
+            <label for="price_max">Precio Máximo:</label>
+            <input type="number" name="price_max" id="price_max" value="{{ request.GET.price_max }}">
+
+            <button type="submit" class="btn-carrito">Filtrar</button>
+        </form>
+    </section>
+
+    <hr>
+
+    <!-- PRODUCTOS DESTACADOS -->
+    <section class="destacados">
+        <h2>Destacados</h2>
+        <div class="scroll-container">
+            <button class="scroll-btn left" onclick="scrollDestacados(-1)">&#10094;</button>
+
+            <div class="productos-scroll" id="destacados-scroll">
+                {% for product in featured_products %}
+                        <div class="producto-scroll">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <img src="{% static 'img/default-product.png' %}" alt="Sin imagen">
+                            {% endif %}
+                            <p>{{ product.name }}</p>
+                            <span>${{ product.price }}</span>
+
+                            <!-- Agregar a carrito -->
+                            <form method="post" action="{% url 'add_to_cart' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-carrito">Agregar al carrito</button>
+                            </form>
+
+                        </div>
                 {% empty %}
-                    Sin etiquetas
+                    <p style="padding: 20px; text-align: center; width: 100%;">
+                        No hay productos destacados.
+                    </p>
                 {% endfor %}
             </div>
-            <div>
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 150px; height: auto; margin-left: 20px;">
-                {% else %}
-                    <p>Sin imagen</p>
-                {% endif %}
-            </div>
-        </li>
-        <hr>
-    {% empty %}
-        <li>No hay productos registrados.</li>
-    {% endfor %}
-</ul>
-<!-- AQUI TERMINA EL FILTRO -->
- 
-        <a href="{% url 'logout' %}">Cerrar sesión</a>
-    </div>
+
+            <button class="scroll-btn right" onclick="scrollDestacados(1)">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- LISTADO DETALLADO -->
+    <section class="listado-detallado">
+        <h3>Productos detallados</h3>
+        <ul>
+            {% for product in products %}
+                <li class="producto" style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <p class="nombre-buscable" style="display: none;">{{ product.name }}</p>
+                    <div style="flex: 1;">
+                        <strong>Nombre:</strong> {{ product.name }}<br>
+                        <strong>Precio:</strong> ${{ product.price }}<br>
+                        <strong>Categoría:</strong> {{ product.category }}<br>
+                        <strong>Descripción:</strong> {{ product.description|default:"Sin descripción" }}<br>
+                        <strong>Tags:</strong> 
+                        {% for tag in product.tags.all %}
+                            {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            Sin etiquetas
+                        {% endfor %}
+                        <form method="post" action="{% url 'add_to_cart' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Agregar al carrito</button>
+                        </form>
+                    </div>
+                    <div>
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 150px; height: auto; margin-left: 20px;">
+                        {% else %}
+                            <p>Sin imagen</p>
+                        {% endif %}
+                    </div>
+                    <hr>
+                </li>
+            {% empty %}
+                <li>No hay productos registrados.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Envío a toda la república y devoluciones gratuitas</p>
+        <div class="pagos">
+            <img src="{% static 'img/visa.png' %}" alt="VISA">
+            <img src="{% static 'img/mastercard.png' %}" alt="Mastercard">
+            <img src="{% static 'img/oxxo.png' %}" alt="OXXO">
+            <img src="{% static 'img/paypal.png' %}" alt="PayPal">
+        </div>
+    </footer>
+
+    <a href="{% url 'logout' %}">Cerrar sesión</a>
+
+    <!-- SCRIPT UTILIZADO EN BUSQUEDA -->
+    <script>
+    // Si quieres hacer el filtro rápido en el input del buscador (solo visual)
+    function filtrarProductos(text) {
+        text = text.toLowerCase();
+        document.querySelectorAll('.producto .nombre-buscable').forEach(p => {
+            const prod = p.textContent.toLowerCase();
+            const item = p.parentElement;
+            if (prod.includes(text)) {
+                item.style.display = "flex"; // restaurar display original del <li>
+            } else {
+                item.style.display = "none";
+            }
+        });
+    }
+    </script>
+
 </body>
 </html>
 

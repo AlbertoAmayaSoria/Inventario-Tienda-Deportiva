@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>LCC Tienda Deportiva - Inicio</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+
+    <body>
+        <header class="header">
+            <h1>LCC Tienda Deportiva</h1>
+            <nav>
+                <h1 class="titulo-tienda">Tienda LCC Unison</h1>
+                <a href="{% url 'home' %}" class="nav-button">Inicio</a>
+                <a href="{% url 'contacto' %}" class="nav-button">Contacto</a>
+                <a href="mi_cuenta.html" class="nav-button">Mi cuenta</a>
+                {% if user.is_staff %}
+                    <!-- <div style="text-align: center; margin-top: 20px;"> -->
+                    <a href="/admin/" class="nav-button">Panel de Administración</a>
+                    <!-- </div> -->
+                {% endif %}
+                <a href="{% url 'view_cart' %}" class="nav-button">Ver Carrito</a>
+            </nav>
+        </header>
+
+        {% block content %}
+        <div class="contact-container">
+            <h2>Acerca de nosotros</h2>
+            <p><strong>Tienda LCC UNISON</strong> es un proyecto desarrollado por estudiantes de la Licenciatura en Ciencias de la Computación de la Universidad de Sonora.</p>
+
+            <p>Este sitio fue creado con fines educativos como parte de un proyecto escolar de Ingeniería de Software.</p>
+
+            <h3>Creadores:</h3>
+            <ul>
+                <li><strong>David Alberto Casanova Martínez</strong></li>
+                <li><strong>Angel Alberto Amaya Soria</strong></li>
+                <li><strong>Andrés Gutiérrez León</strong></li>
+                <li><strong>Juan Pablo Zurita Murillo</strong></li>
+                <li><strong>Orlando Pacheco Velásquez</strong></li>
+            </ul>
+
+            <p>Para más información, contáctanos en <strong>tiendalcc@unison.mx</strong></p>
+        </div>
+        {% endblock %}
+        
+    </body>
+</html>

@@ -1,0 +1,38 @@
+##[pylyzer] failed /home/tito/ProyectoIS/accounts/models.py 1747767646 1781
+.models = pyimport "__init__"
+.__init__ = pyimport "__init__"
+
+.Customer: ClassType
+.Customer <: Never
+.Customer.name: Never
+.Customer.phone: Never
+.Customer.email: Never
+.Customer.date_created: Never
+.Customer.__str__: (self: models.Customer) -> Never
+
+.Tag: ClassType
+.Tag <: Never
+.Tag.name: Never
+.Tag.__str__: (self: models.Tag) -> Never
+
+.Product: ClassType
+.Product <: Never
+.Product.CATEGORY: {Type_v_global_22308: global::Tuple([global::Tuple([Str, Str]), global::Tuple([Str, Str]), global::Tuple([Str, Str]), global::Tuple([Str, Str]), global::Tuple([Str, Str]), global::Tuple([Str, Str])]) | Type_v_global_22308 == (("Ropa", "Ropa"), ("Calzado", "Calzado"), ("Accesorios", "Accesorios"), ("Equipamiento", "Equipamiento"), ("Tecnología", "Tecnología"), ("Nutrición", "Nutrición"))}
+.Product.name: Never
+.Product.price: Never
+.Product.category: Never
+.Product.description: Never
+.Product.date_created: Never
+.Product.tags: Never
+.Product.image: Never
+.Product.__str__: (self: models.Product) -> Never
+
+.Order: ClassType
+.Order <: Never
+.Order.STATUS: {Type_v_global_22319: global::Tuple([global::Tuple([Str, Str]), global::Tuple([Str, Str]), global::Tuple([Str, Str])]) | Type_v_global_22319 == (("Pendiente", "Pendiente"), ("En camino", "En camino"), ("Entregado", "Entregado"))}
+.Order.customer: Never
+.Order.product: Never
+.Order.date_created: Never
+.Order.status: Never
+.Order.__str__: (self: models.Order) -> Never
+
