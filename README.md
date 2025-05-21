@@ -130,16 +130,6 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 ---
 
-## 🧪 PRUEBAS
-
-Para ejecutar las pruebas (si se agregan):
-
-```bash
-python manage.py test
-```
-
----
-
 ## 📦 DEPENDENCIAS REQUERIDAS
 
 Asegúrate de instalar las siguientes dependencias antes de ejecutar el proyecto:
