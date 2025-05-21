@@ -15,6 +15,7 @@
             <a href="{% url 'login' %}" class="nav-button">Inicio</a>
             <a href="{% url 'contacto' %}" class="nav-button">Contacto</a>
             <a href="mi_cuenta.html" class="nav-button">Mi cuenta</a>
+            <a href="{% url 'cart_view' %}" class="nav-button">🛒 Carrito</a>
         </nav>
     </header>
 
@@ -76,6 +77,10 @@
                     {% endif %}
                     <p>{{ product.name }}</p>
                     <span>${{ product.price }}</span>
+                    <form method="post" action="{% url 'add_to_cart' product.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-success">🛒 Añadir al carrito</button>
+                    </form>
                 </div>
             {% empty %}
                 <p>No hay productos destacados.</p>
@@ -100,10 +105,16 @@
                         {% empty %}
                             Sin etiquetas
                         {% endfor %}
+
+                        <!-- Botón de carrito -->
+                        <form method="post" action="{% url 'add_to_cart' product.id %}" style="margin-top: 10px;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-success">🛒 Añadir al carrito</button>
+                        </form>
                     </div>
                     <div>
                         {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 150px; height: auto; margin-left: 20px;">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 150px;">
                         {% else %}
                             <p>Sin imagen</p>
                         {% endif %}
@@ -130,7 +141,6 @@
     <a href="{% url 'logout' %}">Cerrar sesión</a>
 
     <script>
-    // Si quieres hacer el filtro rápido en el input del buscador (solo visual)
     function filtrarProductos(text) {
         text = text.toLowerCase();
         document.querySelectorAll('.producto p').forEach(p => {
@@ -142,4 +152,3 @@
 
 </body>
 </html>
-
