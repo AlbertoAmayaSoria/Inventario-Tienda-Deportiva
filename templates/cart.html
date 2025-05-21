@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="header">
+        <h1>Carrito de Compras</h1>
+        <nav>
+            <a href="{% url 'home' %}" class="nav-button">Volver a la tienda</a>
+            <a href="{% url 'logout' %}" class="nav-button">Cerrar sesión</a>
+        </nav>
+    </header>
+
+    <main class="carrito">
+        {% if cart_items %}
+            <ul>
+                {% for item in cart_items %}
+                    <li style="margin-bottom: 20px;">
+                        <strong>{{ item.product.name }}</strong><br>
+                        Precio: ${{ item.product.price }}<br>
+                        Cantidad: {{ item.quantity }}<br>
+                        Subtotal: ${{ item.subtotal }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <h3>Total: ${{ total }}</h3>
+
+            <form method="post" action="{% url 'confirm_order' %}">
+                {% csrf_token %}
+                <button type="submit">Confirmar Orden</button>
+            </form>
+        {% else %}
+            <p>Tu carrito está vacío.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

@@ -11,6 +11,7 @@ from accounts.models import *
 from .forms import OrderForm
 from django.http import HttpResponseRedirect # para carrito
 from django.urls import reverse # para carrito
+from .models import Product, Order, Customer #para ordenes
 
 
 def login_view(request):
@@ -177,3 +178,68 @@ def add_to_cart(request, product_id):
 
     request.session['cart'] = cart  # Guardar carrito actualizado en sesión
     return HttpResponseRedirect(reverse('home'))
+
+@login_required
+def view_cart(request):
+    cart = request.session.get('cart', {})
+    cart_items = []
+    total = 0
+
+    products = Product.objects.filter(id__in=cart.keys())
+
+    for product in products:
+        quantity = cart[str(product.id)]
+        subtotal = product.price * quantity
+        total += subtotal
+        cart_items.append({
+            'product': product,
+            'quantity': quantity,
+            'subtotal': subtotal,
+        })
+
+    return render(request, 'cart.html', {
+        'cart_items': cart_items,
+        'total': total
+    })
+
+#@login_required
+#def confirm_order(request):
+#    if request.method == 'POST':
+#        # Aquí podrías guardar la orden en base de datos si lo deseas
+#        request.session['cart'] = {}  # Limpiar carrito
+#        messages.success(request, 'Orden confirmada exitosamente.')
+#        return redirect('home')
+#    return redirect('view_cart')
+
+@login_required
+def confirm_order(request):
+    cart = request.session.get('cart', {})
+    if not cart:
+        messages.error(request, "Tu carrito está vacío.")
+        return redirect('view_cart')
+
+    user = request.user
+
+    # Obtener o crear un Customer vinculado al usuario actual
+    customer, created = Customer.objects.get_or_create(
+        email=user.email,
+        defaults={
+            'name': user.username,
+            'phone': 'Sin teléfono'
+        }
+    )
+
+    # Crear una orden por cada producto en el carrito
+    for product_id, quantity in cart.items():
+        product = Product.objects.get(id=product_id)
+        for _ in range(quantity):
+            Order.objects.create(
+                customer=customer,
+                product=product,
+                status='Pendiente'
+            )
+
+    # Vaciar el carrito
+    request.session['cart'] = {}
+    messages.success(request, 'Orden registrada exitosamente.')
+    return redirect('home')
