@@ -58,12 +58,12 @@ Luego accede al panel admin en:
 |-----------------------------------------------|--------|----------------------------------------------------|
 | Visualización de productos por visitantes      | ✔      | Vista `products()` muestra productos disponibles   |
 | Filtro por categoría, precio y etiquetas       | ✔      | Soportado mediante campos de modelo                |
-| Carga de imágenes para productos               | ❌     | El modelo aún no contiene `ImageField`             |
+| Carga de imágenes para productos               | ✔      | El modelo contiene `ImageField`             |
 | Gestión CRUD desde panel de administrador      | ✔      | Admin de Django habilitado                         |
 | Autenticación de usuarios                      | ✔      | Login, logout y registro implementados             |
-| Roles diferenciados: cliente / empleado        | ❓      | A definir                                          |
+| Roles diferenciados: cliente / empleado        | ✔       | Cliente solo realiza ordenes                                        |
 | Registro de pedidos                            | ✔      | Vista `panel()` muestra órdenes por estado         |
-| Historial o bitácora de acciones               | ❌     | No implementado por el momento                     |
+| Historial o bitácora de acciones               | ✔      | Implementado                     |
 
 ---
 
@@ -76,6 +76,7 @@ Luego accede al panel admin en:
 - `description`: descripción
 - `date_created`: fecha de creación automática
 - `tags`: etiquetas relacionadas (many-to-many)
+- `is_featured`: indica si un producto es destacado en home
 
 ### `Order`
 - `customer`: relación con el cliente
